@@ -1,6 +1,6 @@
-import Header from '../components/header'
 import { Outlet } from 'react-router'
 import Footer from '../components/footer'
+import Header from '@/components/header'
 
 const PublicLayout = () => {
   return (
