@@ -11,11 +11,11 @@ export const ToggleContainer = () => {
   const { userId } = useAuth();
 
   return (
-    <Sheet>
+    <Sheet >
       <SheetTrigger className="block md:hidden">
         <Menu />
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="p-4">
         <nav>
           <ul className="flex flex-col items-start gap-8">
             {MainRoutes.map((route) => (
