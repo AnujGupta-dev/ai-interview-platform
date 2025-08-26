@@ -1,11 +1,11 @@
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router'
 import PublicLayout from './layouts/public-layout'
-import HomePage from './routes/home-page'
 import SignInPage from './routes/sign-in'
 import SignUpPage from './routes/sign-up'
 import ProtectedRoute from './layouts/protected-layout'
 import MainLayout from './layouts/main-layout'
+import { HomePage } from './routes/home-page'
 
 function App() {
 
