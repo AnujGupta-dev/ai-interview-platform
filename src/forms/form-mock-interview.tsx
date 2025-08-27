@@ -1,4 +1,4 @@
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
@@ -41,8 +41,7 @@ const formSchema = z.object({
     .min(1, "Position is required")
     .max(100, "Position must be 100 characters or less"),
   description: z.string().min(10, "Description is required"),
-  experience: z.coerce
-    .number()
+  experience: z.number()
     .min(0, "Experience cannot be empty or negative"),
   techStack: z.string().min(1, "Tech stack must be at least a character"),
 });
@@ -50,10 +49,16 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export const FormMockInterview = ({ initialData }: FormMockInterview) => {
-  const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
-    defaultValues: initialData || {}
-  });
+  const form = useForm<FormData, any, FormData>({
+  resolver: zodResolver(formSchema),
+  defaultValues: initialData ?? {
+    position: "",
+    description: "",
+    experience: 0,
+    techStack: "",
+  },
+});
+
 
   const { isValid, isSubmitting } = form.formState;
   const [isLoading, setIsLoading] = useState(false);
@@ -117,7 +122,7 @@ export const FormMockInterview = ({ initialData }: FormMockInterview) => {
     return cleanedResponse;
   };
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit:SubmitHandler<FormData>  = async (data: FormData) => {
     try {
       setIsLoading(true);
 
