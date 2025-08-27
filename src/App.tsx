@@ -8,6 +8,7 @@ import MainLayout from './layouts/main-layout'
 import { HomePage } from './routes/home-page'
 import { Generate } from './components/generate'
 import { Dashboard } from './routes/dashboard'
+import { CreateEditPage } from './routes/create-edit-apge'
 
 function App() {
 
@@ -24,18 +25,20 @@ function App() {
             <Route path="/" element={<HomePage />} />
           </Route>
 
-            {/* protected routes */}
-        <Route
-          element={
-            <ProtectedRoute>
-              <MainLayout />
-            </ProtectedRoute>
-          }
-        >
-           <Route path="/generate" element={<Generate />}>
+          {/* protected routes */}
+          <Route
+            element={
+              <ProtectedRoute>
+                <MainLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="/generate" element={<Generate />}>
               <Route index element={<Dashboard />} />
-           </Route>
-        </Route>
+              {/* create route */}
+              <Route path=":interviewId" element={<CreateEditPage />} />
+            </Route>
+          </Route>
 
         </Routes>
       </BrowserRouter>
