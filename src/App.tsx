@@ -6,6 +6,8 @@ import SignUpPage from './routes/sign-up'
 import ProtectedRoute from './layouts/protected-layout'
 import MainLayout from './layouts/main-layout'
 import { HomePage } from './routes/home-page'
+import { Generate } from './components/generate'
+import { Dashboard } from './routes/dashboard'
 
 function App() {
 
@@ -30,6 +32,9 @@ function App() {
             </ProtectedRoute>
           }
         >
+           <Route path="/generate" element={<Generate />}>
+              <Route index element={<Dashboard />} />
+           </Route>
         </Route>
 
         </Routes>
