@@ -3,6 +3,7 @@ import { StrictMode } from 'react'
   import './index.css'
   import App from './App.tsx'
   import { ClerkProvider } from '@clerk/clerk-react'
+import { ToasterProvider } from './providers/toast-provider.tsx'
 
   // Import your Publishable Key
   const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
@@ -15,6 +16,7 @@ import { StrictMode } from 'react'
     <StrictMode>
       <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
         <App />
+        <ToasterProvider />
       </ClerkProvider>
     </StrictMode>,
   )
