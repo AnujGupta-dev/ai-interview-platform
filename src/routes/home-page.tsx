@@ -64,9 +64,11 @@ export const HomePage = () => {
               practice questions, real-time feedback, and personalized insights.
             </p>
 
-            <Button className="mt-3">
-              Generate <Sparkles />
-            </Button>
+            <Link to={"/generate"} className="w-full mt-2">
+              <Button className="mt-3 ">
+                Generate <Sparkles />
+              </Button>
+            </Link>
           </div>
         </div>
       </Container>

@@ -2,7 +2,7 @@ import { SignIn } from "@clerk/clerk-react";
 
 export const SignInPage = () => {
   return (
-    <div className="w-screen h-screen overflow-hidden flex items-center justify-center relative">
+    <div className="w-full h-screen flex items-center justify-center relative overflow-hidden ">
       <img
         src="/img/bg.png"
         alt=""

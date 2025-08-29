@@ -29,13 +29,10 @@ function App() {
           </Route>
 
           {/* protected routes */}
-          <Route
-            element={
-              <ProtectedRoute>
-                <MainLayout />
-              </ProtectedRoute>
-            }
-          >
+          <Route element={<ProtectedRoute>
+                          <MainLayout />
+                          </ProtectedRoute>} >
+
             <Route path="/generate" element={<Generate />}>
               <Route index element={<Dashboard />} />
               {/* create route */}

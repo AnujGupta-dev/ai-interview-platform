@@ -6,7 +6,7 @@ import { db } from "@/config/firebase-config"
 import { LoaderPage } from "@/views/loader-page";
 import type { User } from "@/types";
 
-const AuthHandler = () => {
+const  AuthHandler = () => {
   const { isSignedIn } = useAuth();
   const { user } = useUser();
 

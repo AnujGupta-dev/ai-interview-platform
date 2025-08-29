@@ -49,7 +49,7 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export const FormMockInterview = ({ initialData }: FormMockInterview) => {
-  const form = useForm<FormData, any, FormData>({
+  const form = useForm<FormData>({
   resolver: zodResolver(formSchema),
   defaultValues: initialData ?? {
     position: "",
@@ -272,6 +272,7 @@ export const FormMockInterview = ({ initialData }: FormMockInterview) => {
                     disabled={isLoading}
                     placeholder="eg:- 5 Years"
                     {...field}
+                    onChange={(e) => field.onChange(e.target.valueAsNumber)}
                   />
                 </FormControl>
               </FormItem>
@@ -311,7 +312,7 @@ export const FormMockInterview = ({ initialData }: FormMockInterview) => {
             <Button
               type="submit"
               size={"sm"}
-              disabled={isSubmitting || !isValid || isLoading}
+              disabled={isSubmitting ||  isLoading}
             >
               {isLoading ? (
                 <Loader className="text-gray-50 animate-spin" />
