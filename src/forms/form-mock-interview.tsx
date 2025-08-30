@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 import type { Interview } from "@/types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "@clerk/clerk-react";
 import { CustomBreadCrumb } from "@/components/custom-bread-crumb";
@@ -43,21 +43,33 @@ const formSchema = z.object({
   description: z.string().min(10, "Description is required"),
   experience: z.number()
     .min(0, "Experience cannot be empty or negative"),
-  techStack: z.string().min(1, "Tech stack must be at least a character"),
+  techStack: z.array(z.string().min(1)).min(1, "At least one tech stack is required"),
 });
 
 type FormData = z.infer<typeof formSchema>;
 
 export const FormMockInterview = ({ initialData }: FormMockInterview) => {
   const form = useForm<FormData>({
-  resolver: zodResolver(formSchema),
-  defaultValues: initialData ?? {
-    position: "",
-    description: "",
-    experience: 0,
-    techStack: "",
-  },
-});
+    resolver: zodResolver(formSchema),
+    defaultValues: initialData
+      ? {
+        position: initialData.position,
+        description: initialData.description,
+        experience: initialData.experience,
+        techStack: initialData.techStack
+          ? (Array.isArray(initialData.techStack)
+            ? initialData.techStack
+            : [initialData.techStack]
+          ).map((s) => s.trim())
+          : [],
+      }
+      : {
+        position: "",
+        description: "",
+        experience: 0,
+        techStack: [],
+      },
+  });
 
 
   const { isValid, isSubmitting } = form.formState;
@@ -122,7 +134,7 @@ export const FormMockInterview = ({ initialData }: FormMockInterview) => {
     return cleanedResponse;
   };
 
-  const onSubmit:SubmitHandler<FormData>  = async (data: FormData) => {
+  const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
     try {
       setIsLoading(true);
 
@@ -176,16 +188,7 @@ export const FormMockInterview = ({ initialData }: FormMockInterview) => {
     }
   };
 
-  useEffect(() => {
-    if (initialData) {
-      form.reset({
-        position: initialData.position,
-        description: initialData.description,
-        experience: initialData.experience,
-        techStack: initialData.techStack,
-      });
-    }
-  }, [initialData, form]);
+
 
   return (
     <div className="w-full flex-col space-y-4">
@@ -248,7 +251,7 @@ export const FormMockInterview = ({ initialData }: FormMockInterview) => {
                   <Textarea
                     className="h-12"
                     disabled={isLoading}
-                    placeholder="eg:- describle your job role"
+                    placeholder="eg:- Describle your job role"
                     {...field}
                   />
                 </FormControl>
@@ -282,22 +285,64 @@ export const FormMockInterview = ({ initialData }: FormMockInterview) => {
           <FormField
             control={form.control}
             name="techStack"
-            render={({ field }) => (
-              <FormItem className="w-full space-y-4">
-                <div className="w-full flex items-center justify-between">
-                  <FormLabel>Tech Stacks</FormLabel>
-                  <FormMessage className="text-sm" />
-                </div>
-                <FormControl>
-                  <Textarea
-                    className="h-12"
-                    disabled={isLoading}
-                    placeholder="eg:- React, Typescript..."
-                    {...field}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
+            render={({ field }) => {
+              const [inputValue, setInputValue] = useState("");
+
+              const addStack = (value: string) => {
+                if (value.trim() && !field.value.includes(value.trim())) {
+                  field.onChange([...field.value, value.trim()]);
+                }
+              };
+
+              const removeStack = (stack: string) => {
+                field.onChange(field.value.filter((s: string) => s !== stack));
+              };
+
+              const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  addStack(inputValue);
+                  setInputValue("");
+                }
+              };
+
+              return (
+                <FormItem className="w-full space-y-4">
+                  <div className="w-full flex items-center justify-between">
+                    <FormLabel>Tech Stacks</FormLabel>
+                    <FormMessage className="text-sm" />
+                  </div>
+                  <FormControl>
+                    <div className="w-full border rounded-lg p-2 flex flex-wrap gap-2">
+                      {field.value?.map((stack: string, i: number) => (
+                        <div
+                          key={i}
+                          className="bg-gray-200 px-3 py-1 rounded-full flex items-center gap-2"
+                        >
+                          {stack}
+                          <button
+                            type="button"
+                            onClick={() => removeStack(stack)}
+                            className="text-red-500 font-bold"
+                          >
+                            ×
+                          </button>
+                        </div>
+                      ))}
+                      <input
+                        type="text"
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        disabled={isLoading}
+                        className="flex-1 outline-none text-sm h-8"
+                        placeholder="Type and press Enter..."
+                      />
+                    </div>
+                  </FormControl>
+                </FormItem>
+              );
+            }}
           />
 
           <div className="w-full flex items-center justify-end gap-6">
@@ -312,7 +357,7 @@ export const FormMockInterview = ({ initialData }: FormMockInterview) => {
             <Button
               type="submit"
               size={"sm"}
-              disabled={isSubmitting ||  isLoading}
+              disabled={isSubmitting || isLoading}
             >
               {isLoading ? (
                 <Loader className="text-gray-50 animate-spin" />

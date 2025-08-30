@@ -80,7 +80,7 @@ export const InterviewPin = ({
       <CardTitle>{data?.position}</CardTitle>
       <CardDescription>{data?.description}</CardDescription>
       <div className="w-full flex items-center gap-2 flex-wrap">
-        {data.techStack.split(",").map((word, index) => (
+        {Array.from(data.techStack).map((word, index) => (
           <Badge
             key={index}
             variant={"outline"}

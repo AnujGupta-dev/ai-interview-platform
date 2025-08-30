@@ -43,21 +43,9 @@ interface AIResponse {
   feedback: string;
 }
 
-export const RecordAnswer = ({
-  question,
-  isWebCam,
-  setIsWebCam,
-}: RecordAnswerProps) => {
-  const {
-    interimResult,
-    isRecording,
-    results,
-    startSpeechToText,
-    stopSpeechToText,
-  } = useSpeechToText({
-    continuous: true,
-    useLegacyResults: false,
-  });
+export const RecordAnswer = ({question,isWebCam,setIsWebCam,}: RecordAnswerProps) => {
+
+  const {interimResult,isRecording,results,startSpeechToText,stopSpeechToText,} = useSpeechToText({continuous: true,useLegacyResults: false,});
 
   const [userAnswer, setUserAnswer] = useState("");
   const [isAiGenerating, setIsAiGenerating] = useState(false);

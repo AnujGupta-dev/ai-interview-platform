@@ -68,8 +68,9 @@ export const MockInterviewPage = () => {
 
       <div className="w-full">
         <Alert className="bg-sky-100 border border-sky-200 p-4 rounded-lg flex items-start gap-3">
-          <Lightbulb className="h-5 w-5 text-sky-600" />
-          <div>
+          
+          <div className="pl-5 py-5">
+            <Lightbulb className="h-5 w-5 text-sky-600" />
             <AlertTitle className="text-sky-800 font-semibold">
               Important Note
             </AlertTitle>

@@ -14,8 +14,7 @@ interface QuestionSectionProps {
 export const QuestionSection = ({ questions }: QuestionSectionProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isWebCam, setIsWebCam] = useState(false);
-  const [currentSpeech, setCurrentSpeech] =
-    useState<SpeechSynthesisUtterance | null>(null);
+  const [currentSpeech, setCurrentSpeech] = useState<SpeechSynthesisUtterance | null>(null);
 
   const handlePlayQuestion = (qst: string) => {
     if (isPlaying && currentSpeech) {

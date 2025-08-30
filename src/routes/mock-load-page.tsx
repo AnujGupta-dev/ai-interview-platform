@@ -74,20 +74,22 @@ export const MockLoadPage = () => {
       {interview && <InterviewPin data={interview} onMockPage />}
 
       <Alert className="bg-yellow-100/50 border-yellow-200 p-4 rounded-lg flex items-start gap-3 -mt-3">
-        <Lightbulb className="h-5 w-5 text-yellow-600" />
-        <div>
+        
+        <div className="pl-5 py-5" >
+          <Lightbulb className="h-5 w-5 text-yellow-600" />
           <AlertTitle className="text-yellow-800 font-semibold">
             Important Information
           </AlertTitle>
+          <br />
           <AlertDescription className="text-sm text-yellow-700 mt-1">
             Please enable your webcam and microphone to start the AI-generated
             mock interview. The interview consists of five questions. You’ll
             receive a personalized report based on your responses at the end.{" "}
             <br />
             <br />
-            <span className="font-medium">Note:</span> Your video is{" "}
-            <strong>never recorded</strong>. You can disable your webcam at any
-            time.
+            <span className="font-medium">Note:</span><span>Your video is{" "}
+            <strong>never recorded</strong> you can disable your webcam at any
+            time.</span> 
           </AlertDescription>
         </div>
       </Alert>
