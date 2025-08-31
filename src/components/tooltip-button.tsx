@@ -34,7 +34,7 @@ export const TooltipButton = ({
   icon,
   onClick,
   buttonVariant = "ghost",
-  buttonClassName = "",
+  buttonClassName = "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
   delay = 0,
   disabled = false,
   loading = false,
@@ -43,14 +43,14 @@ export const TooltipButton = ({
     <TooltipProvider delayDuration={delay}>
       <Tooltip>
         <TooltipTrigger
-          className={disabled ? "cursor-not-allowed" : "cursor-pointer"}
+          className={disabled ? "cursor-not-allowed" : "cursor-pointer"}  asChild
         >
           <Button
             size={"icon"}
             disabled={disabled}
             variant={buttonVariant}
             className={buttonClassName}
-            onClick={onClick}
+            onClick={onClick}           
           >
             {loading ? (
               <Loader className="min-w-4 min-h-4 animate-spin text-emerald-400" />
