@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 import type { Interview } from "@/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "@clerk/clerk-react";
 import { CustomBreadCrumb } from "@/components/custom-bread-crumb";
@@ -49,6 +49,7 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export const FormMockInterview = ({ initialData }: FormMockInterview) => {
+
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData
@@ -188,7 +189,21 @@ export const FormMockInterview = ({ initialData }: FormMockInterview) => {
     }
   };
 
-
+  useEffect(() => {
+    if (initialData) {
+      form.reset({
+        position: initialData.position || "",
+        description: initialData.description || "",
+        experience: initialData.experience || 0,
+        techStack: initialData.techStack
+          ? (Array.isArray(initialData.techStack)
+              ? initialData.techStack
+              : [initialData.techStack]
+            ).map((s) => s.trim())
+          : [],
+      });
+    }
+  }, [initialData, form]);
 
   return (
     <div className="w-full flex-col space-y-4">

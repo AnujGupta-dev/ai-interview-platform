@@ -12,6 +12,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 import type { Interview } from "@/types";
 import { QuestionSection } from "@/containers/question-section";
+import { Button } from "@/components/ui/button";
 
 export const MockInterviewPage = () => {
   const { interviewId } = useParams<{ interviewId: string }>();
@@ -93,6 +94,13 @@ export const MockInterviewPage = () => {
           <QuestionSection questions={interview?.questions} />
         </div>
       )}
+
+      <div className="w-full flex justify-end  ">
+        <Button 
+              onClick={() => {
+                navigate(`/generate/feedback/${interview?.id}` ,{replace: true});
+              }}>Completed</Button>
+      </div>
     </div>
   );
 };
