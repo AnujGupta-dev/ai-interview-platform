@@ -57,61 +57,78 @@ export const MockLoadPage = () => {
   }
 
   return (
-    <div className="flex flex-col w-full gap-8 py-5">
-      <div className="flex items-center justify-between w-full gap-2">
+    <div className="flex flex-col w-full gap-8 py-5 animate-fade-in">
+      <div className="flex items-center justify-between w-full gap-2 animate-slide-up">
         <CustomBreadCrumb
           breadCrumbPage={interview?.position || ""}
           breadCrumpItems={[{ label: "Mock Interviews", link: "/generate" }]}
         />
 
         <Link to={`/generate/interview/${interviewId}/start`}>
-          <Button size={"sm"}>
-            Start <Sparkles />
+          <Button size={"sm"} className="gradient-primary hover:shadow-lg transition-all duration-300 hover-glow">
+            Start <Sparkles className="ml-2" />
           </Button>
         </Link>
       </div>
 
-      {interview && <InterviewPin data={interview} onMockPage />}
+      {interview && (
+        <div className="animate-slide-up">
+          <InterviewPin data={interview} onMockPage />
+        </div>
+      )}
 
-      <Alert className="bg-yellow-100/50 border-yellow-200 p-4 rounded-lg flex items-start gap-3 -mt-3">
-        
-        <div className="pl-5 py-5" >
-          <Lightbulb className="h-5 w-5 text-yellow-600" />
-          <AlertTitle className="text-yellow-800 font-semibold">
-            Important Information
-          </AlertTitle>
-          <br />
-          <AlertDescription className="text-sm text-yellow-700 mt-1">
-            Please enable your webcam and microphone to start the AI-generated
-            mock interview. The interview consists of five questions. You’ll
-            receive a personalized report based on your responses at the end.{" "}
-            <br />
-            <br />
-            <span className="font-medium">Note:</span><span>Your video is{" "}
-            <strong>never recorded</strong> you can disable your webcam at any
-            time.</span> 
-          </AlertDescription>
+      <Alert className="gradient-card border-amber-200/50 p-6 rounded-xl flex items-start gap-4 animate-scale-in hover-lift">
+        <div className="flex items-start gap-4">
+          <Lightbulb className="h-6 w-6 text-amber-600 mt-1 flex-shrink-0" />
+          <div className="space-y-3">
+            <AlertTitle className="text-amber-800 dark:text-amber-200 font-bold text-lg">
+              Important Information
+            </AlertTitle>
+            <AlertDescription className="text-amber-700 dark:text-amber-300 leading-relaxed">
+              Please enable your webcam and microphone to start the AI-generated
+              mock interview. The interview consists of five questions. You'll
+              receive a personalized report based on your responses at the end.
+              <br />
+              <br />
+              <span className="font-semibold">Note:</span> Your video is{" "}
+              <strong>never recorded</strong> - you can disable your webcam at any
+              time.
+            </AlertDescription>
+          </div>
         </div>
       </Alert>
 
-      <div className="flex items-center justify-center w-full h-full">
-        <div className="w-full h-[400px] md:w-96 flex flex-col items-center justify-center border p-4 bg-gray-50 rounded-md">
+      <div className="flex items-center justify-center w-full h-full animate-fade-in">
+        <div className="w-full h-[400px] md:w-96 flex flex-col items-center justify-center gradient-card p-6 rounded-xl border border-border/50 hover-lift">
           {isWebCamEnabled ? (
             <WebCam
-              onUserMedia={() => setIsWebCamEnabled(true)}
-              onUserMediaError={() => setIsWebCamEnabled(false)}
-              className="w-full h-full object-cover rounded-md"
+              audio={true}
+              width={320}
+              height={240}
+              className="rounded-lg shadow-lg"
             />
           ) : (
-            <WebcamIcon className="min-w-24 min-h-24 text-muted-foreground" />
+            <div className="text-center space-y-4">
+              <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center mx-auto">
+                <WebcamIcon className="w-10 h-10 text-muted-foreground" />
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-lg font-semibold text-foreground">
+                  Enable Webcam
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Click the button below to enable your webcam for the interview
+                </p>
+              </div>
+              <Button 
+                onClick={() => setIsWebCamEnabled(!isWebCamEnabled)}
+                className="gradient-primary hover:shadow-lg transition-all duration-300 hover-glow"
+              >
+                Enable Webcam <WebcamIcon className="ml-2 w-4 h-4" />
+              </Button>
+            </div>
           )}
         </div>
-      </div>
-
-      <div className="flex items-center justify-center">
-        <Button onClick={() => setIsWebCamEnabled(!isWebCamEnabled)}>
-          {isWebCamEnabled ? "Disable Webcam" : "Enable Webcam"}
-        </Button>
       </div>
     </div>
   );

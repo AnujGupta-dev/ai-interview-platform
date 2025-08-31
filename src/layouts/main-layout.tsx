@@ -5,10 +5,10 @@ import { Outlet } from "react-router";
 
 const MainLayout = () => {
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col min-h-screen gradient-bg">
       <Header />
-      <Container className="flex-grow">
-        <main className="flex-grow">
+      <Container className="flex-grow py-8">
+        <main className="flex-grow animate-fade-in">
           <Outlet />
         </main>
       </Container>

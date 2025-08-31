@@ -4,16 +4,16 @@ const MainRoutes = [
     href: "/",
   },
   {
-    label: "Contact Us",
-    href: "/contact",
-  },
-  {
     label: "About Us",
-    href: "/about",
+    href: "/about-us",
   },
   {
     label: "Services",
     href: "/services",
+  },
+  {
+    label: "Contact Us",
+    href: "/contact-us",
   },
 ];
 

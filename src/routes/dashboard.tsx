@@ -50,60 +50,67 @@ export const Dashboard = () => {
   }, [userId]);
 
   return (
-    <>
-      <div className="flex w-full items-center justify-between">
+    <div className="animate-fade-in">
+      <div className="flex w-full items-center justify-between mb-8">
         {/* heading */}
-        <Headings
-          title="Dashboard"
-          description="Create and start you AI Mock interview"
-        />
+        <div className="animate-slide-up">
+          <Headings
+            title="Dashboard"
+            description="Create and start your AI Mock interview"
+          />
+        </div>
         {/* action button */}
 
         <Link to={"/generate/create"}>
-          <Button size={"sm"}>
-            <Plus className="min-w-5 min-h-5 mr-1" />
+          <Button size={"sm"} className="gradient-primary hover:shadow-lg transition-all duration-300 hover-glow animate-scale-in">
+            <Plus className="min-w-5 min-h-5 mr-2" />
             Add new
           </Button>
         </Link>
       </div>
 
-      <Separator className="my-8" />
+      <Separator className="my-8 opacity-50" />
 
-      <div className="md:grid md:grid-cols-3 gap-3 py-4">
+      <div className="md:grid md:grid-cols-3 gap-6 py-6">
         {loading ? (
           Array.from({ length: 6 }).map((_, index) => (
-            <Skeleton key={index} className="h-24 md:h-32 rounded-md" />
+            <div key={index} className="animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
+              <Skeleton className="h-32 rounded-xl gradient-card" />
+            </div>
           ))
         ) : interviews.length > 0 ? (
-          interviews.map((interview) => (
-            <InterviewPin key={interview.id} data={interview} />
+          interviews.map((interview, index) => (
+            <div key={interview.id} className="animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
+              <InterviewPin data={interview} />
+            </div>
           ))
         ) : (
-          <div className="md:col-span-3 w-full flex flex-grow items-center justify-center h-96 flex-col">
-            <img
-              src="/svg/not-found.svg"
-              className="w-44 h-44 object-contain"
-              alt=""
-            />
+          <div className="md:col-span-3 w-full flex flex-grow items-center justify-center h-96 flex-col animate-fade-in">
+            <div className="gradient-card p-8 rounded-2xl text-center max-w-md hover-lift">
+              <img
+                src="/svg/not-found.svg"
+                className="w-32 h-32 object-contain mx-auto mb-6 opacity-60"
+                alt="No data found"
+              />
 
-            <h2 className="text-lg font-semibold text-muted-foreground">
-              No Data Found
-            </h2>
+              <h2 className="text-xl font-bold text-foreground mb-3">
+                No Interviews Found
+              </h2>
 
-            <p className="w-full md:w-96 text-center text-sm text-neutral-400 mt-4">
-              There is no available data to show. Please add some new mock
-              interviews
-            </p>
+              <p className="text-muted-foreground mb-6 leading-relaxed">
+                There are no available interviews to show. Create your first mock interview to get started with AI-powered practice.
+              </p>
 
-            <Link to={"/generate/create"} className="mt-4">
-              <Button size={"sm"}>
-                <Plus className="min-w-5 min-h-5 mr-1" />
-                Add New
-              </Button>
-            </Link>
+              <Link to={"/generate/create"}>
+                <Button size={"sm"} className="gradient-primary hover:shadow-lg transition-all duration-300 hover-glow">
+                  <Plus className="min-w-5 min-h-5 mr-2" />
+                  Create First Interview
+                </Button>
+              </Link>
+            </div>
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 };

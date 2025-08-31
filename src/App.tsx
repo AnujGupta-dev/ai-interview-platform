@@ -6,6 +6,9 @@ import {SignUpPage} from './routes/sign-up'
 import ProtectedRoute from './layouts/protected-layout'
 import MainLayout from './layouts/main-layout'
 import { HomePage } from './routes/home-page'
+import { AboutUsPage } from './routes/about-us'
+import { ServicesPage } from './routes/services'
+import { ContactUsPage } from './routes/contact-us'
 import { Generate } from './components/generate'
 import { Dashboard } from './routes/dashboard'
 import { CreateEditPage } from './routes/create-edit-apge'
@@ -26,6 +29,9 @@ function App() {
 
           <Route element={<PublicLayout />}>
             <Route path="/" element={<HomePage />} />
+            <Route path="/about-us" element={<AboutUsPage />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/contact-us" element={<ContactUsPage />} />
           </Route>
 
           {/* protected routes */}

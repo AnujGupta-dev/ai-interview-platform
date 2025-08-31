@@ -9,7 +9,7 @@ export const LoaderPage = ({ className }: { className?: string }) => {
         className
       )}
     >
-      <Loader className="text-3xl text-emerald-500 animate-spin" />
+      <Loader className="text-3xl loader-colour animate-spin" />
     </div>
   );
 };

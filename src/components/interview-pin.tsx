@@ -76,15 +76,22 @@ export const InterviewPin = ({
   };
 
   return (
-    <Card className="p-4 rounded-md shadow-none hover:shadow-md shadow-gray-100 cursor-pointer transition-all space-y-4">
-      <CardTitle>{data?.position}</CardTitle>
-      <CardDescription>{data?.description}</CardDescription>
+    <Card className="p-6 rounded-xl gradient-card hover-lift cursor-pointer transition-all duration-300 space-y-4 border border-border/50">
+      <div className="space-y-3">
+        <CardTitle className="text-lg font-bold text-foreground">
+          {data?.position}
+        </CardTitle>
+        <CardDescription className="text-muted-foreground leading-relaxed">
+          {data?.description}
+        </CardDescription>
+      </div>
+      
       <div className="w-full flex items-center gap-2 flex-wrap">
         {Array.from(data.techStack).map((word, index) => (
           <Badge
             key={index}
             variant={"outline"}
-            className="text-xs text-muted-foreground hover:border-emerald-400 hover:bg-emerald-50 hover:text-emerald-900"
+            className="text-xs font-medium transition-all duration-200 hover:scale-105 hover:border-primary hover:bg-primary/10 hover:text-primary"
           >
             {word}
           </Badge>
@@ -93,11 +100,11 @@ export const InterviewPin = ({
 
       <CardFooter
         className={cn(
-          "w-full flex items-center p-0",
+          "w-full flex items-center p-0 pt-4 border-t border-border/30",
           onMockPage ? "justify-end" : "justify-between"
         )}
       >
-        <p className="text-[12px] text-muted-foreground truncate whitespace-nowrap">
+        <p className="text-xs text-muted-foreground truncate whitespace-nowrap font-medium">
           {`${new Date(data.createdAt.toDate()).toLocaleDateString("en-US", {
             dateStyle: "long",
           })} - ${new Date(data.createdAt.toMillis()).toLocaleTimeString(
@@ -109,7 +116,7 @@ export const InterviewPin = ({
         </p>
 
         {!onMockPage && (
-          <div className="flex items-center justify-center ">
+          <div className="flex items-center justify-center gap-1">
             <TooltipButton
               content="Edit"
               buttonVariant={"ghost"}
@@ -117,8 +124,8 @@ export const InterviewPin = ({
                 navigate(`/generate/${data.id}`);
               }}
               disabled={false}
-              buttonClassName="hover:text-red-500"
-              icon={<Pencil />}
+              buttonClassName="hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950/20 transition-all duration-200"
+              icon={<Pencil className="w-4 h-4" />}
               loading={false}
             />
 
@@ -127,8 +134,8 @@ export const InterviewPin = ({
               buttonVariant={"ghost"}
               onClick={onDelete}
               disabled={false}
-              buttonClassName="hover:text-red-500"
-              icon={<Trash2 />}
+              buttonClassName="hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-all duration-200"
+              icon={<Trash2 className="w-4 h-4" />}
               loading={loading}
             />
 
@@ -139,8 +146,8 @@ export const InterviewPin = ({
                 navigate(`/generate/feedback/${data.id}`);
               }}
               disabled={false}
-              buttonClassName="hover:text-emerald-500"
-              icon={<Newspaper />}
+              buttonClassName="hover:text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-950/20 transition-all duration-200"
+              icon={<Newspaper className="w-4 h-4" />}
               loading={false}
             />
 
@@ -151,8 +158,8 @@ export const InterviewPin = ({
                 navigate(`/generate/interview/${data.id}`);
               }}
               disabled={false}
-              buttonClassName="hover:text-sky-500"
-              icon={<Sparkles />}
+              buttonClassName="hover:text-sky-500 hover:bg-sky-50 dark:hover:bg-sky-950/20 transition-all duration-200"
+              icon={<Sparkles className="w-4 h-4" />}
               loading={false}
             />
           </div>

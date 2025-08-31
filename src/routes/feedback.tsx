@@ -111,8 +111,8 @@ export const Feedback = () => {
   }
 
   return (
-    <div className="flex flex-col w-full gap-8 py-5">
-      <div className="flex items-center justify-between w-full gap-2">
+    <div className="flex flex-col w-full gap-8 py-5 animate-fade-in">
+      <div className="flex items-center justify-between w-full gap-2 animate-slide-up">
         <CustomBreadCrumb
           breadCrumbPage={"Feedback"}
           breadCrumpItems={[
@@ -125,77 +125,88 @@ export const Feedback = () => {
         />
       </div>
 
-      <Headings
-        title="Congratulations !"
-        description="Your personalized feedback is now available. Dive in to see your strengths, areas for improvement, and tips to help you ace your next interview."
-      />
+      <div className="animate-slide-up">
+        <Headings
+          title="Congratulations! 🎉"
+          description="Your personalized feedback is now available. Dive in to see your strengths, areas for improvement, and tips to help you ace your next interview."
+        />
+      </div>
 
-      <p className="text-base text-muted-foreground">
-        Your overall interview ratings :{" "}
-        <span className="text-emerald-500 font-semibold text-xl">
-          {overAllRating} / 10
-        </span>
-      </p>
+      <div className="gradient-card p-6 rounded-2xl animate-scale-in hover-lift">
+        <p className="text-lg text-muted-foreground">
+          Your overall interview rating:{" "}
+          <span className="gradient-primary bg-clip-text text-transparent font-bold text-2xl">
+            {overAllRating} / 10
+          </span>
+        </p>
+      </div>
 
-      {interview && <InterviewPin data={interview} onMockPage />}
+      {interview && (
+        <div className="animate-slide-up">
+          <InterviewPin data={interview} onMockPage />
+        </div>
+      )}
 
-      <Headings title="Interview Feedback" isSubHeading />
+      <div className="animate-slide-up">
+        <Headings title="Interview Feedback" isSubHeading />
+      </div>
 
       {feedbacks && (
-        <Accordion type="single" collapsible className="space-y-6">
-          {feedbacks.map((feed) => (
+        <Accordion type="single" collapsible className="space-y-4 animate-fade-in">
+          {feedbacks.map((feed, index) => (
             <AccordionItem
               key={feed.id}
               value={feed.id}
-              className="border rounded-lg shadow-md"
+              className="gradient-card border border-border/50 rounded-xl shadow-sm hover-lift transition-all duration-300"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
               <AccordionTrigger
                 onClick={() => setActiveFeed(feed.id)}
                 className={cn(
-                  "px-5 py-3 flex items-center justify-between text-base rounded-t-lg transition-colors hover:no-underline",
+                  "px-6 py-4 flex items-center justify-between text-base rounded-t-xl transition-all duration-200 hover:no-underline",
                   activeFeed === feed.id
-                    ? "bg-gradient-to-r from-purple-50 to-blue-50"
-                    : "hover:bg-gray-50"
+                    ? "bg-gradient-to-r from-primary/10 to-secondary/10"
+                    : "hover:bg-accent/50"
                 )}
               >
-                <span>{feed.question}</span>
+                <span className="font-medium text-foreground">{feed.question}</span>
               </AccordionTrigger>
 
-              <AccordionContent className="px-5 py-6 bg-white rounded-b-lg space-y-5 shadow-inner">
-                <div className="text-lg font-semibold to-gray-700">
-                  <Star className="inline mr-2 text-yellow-400" />
-                  Rating : {feed.rating}
+              <AccordionContent className="px-6 py-6 space-y-6 rounded-b-xl">
+                <div className="flex items-center gap-2 text-lg font-semibold text-foreground">
+                  <Star className="text-yellow-500 w-5 h-5" />
+                  Rating: {feed.rating}/10
                 </div>
 
-                <Card className="border-none space-y-3 p-4 bg-green-50 rounded-lg shadow-md">
-                  <CardTitle className="flex items-center">
-                    <CircleCheck className="mr-2 text-green-600" />
+                <Card className="border-none space-y-3 p-5 bg-emerald-50 dark:bg-emerald-950/20 rounded-xl shadow-sm">
+                  <CardTitle className="flex items-center text-emerald-700 dark:text-emerald-300">
+                    <CircleCheck className="mr-2 text-emerald-600 dark:text-emerald-400 w-5 h-5" />
                     Expected Answer
                   </CardTitle>
 
-                  <CardDescription className="font-medium text-gray-700">
+                  <CardDescription className="font-medium text-emerald-800 dark:text-emerald-200 leading-relaxed">
                     {feed.correct_ans}
                   </CardDescription>
                 </Card>
 
-                <Card className="border-none space-y-3 p-4 bg-blue-50 rounded-lg shadow-md">
-                  <CardTitle className="flex items-center">
-                    <CircleCheck className="mr-2 text-blue-600" />
+                <Card className="border-none space-y-3 p-5 bg-blue-50 dark:bg-blue-950/20 rounded-xl shadow-sm">
+                  <CardTitle className="flex items-center text-blue-700 dark:text-blue-300">
+                    <CircleCheck className="mr-2 text-blue-600 dark:text-blue-400 w-5 h-5" />
                     Your Answer
                   </CardTitle>
 
-                  <CardDescription className="font-medium text-gray-700">
+                  <CardDescription className="font-medium text-blue-800 dark:text-blue-200 leading-relaxed">
                     {feed.user_ans}
                   </CardDescription>
                 </Card>
 
-                <Card className="border-none space-y-3 p-4 bg-red-50 rounded-lg shadow-md">
-                  <CardTitle className="flex items-center">
-                    <CircleCheck className="mr-2 text-red-600" />
+                <Card className="border-none space-y-3 p-5 bg-amber-50 dark:bg-amber-950/20 rounded-xl shadow-sm">
+                  <CardTitle className="flex items-center text-amber-700 dark:text-amber-300">
+                    <CircleCheck className="mr-2 text-amber-600 dark:text-amber-400 w-5 h-5" />
                     Feedback
                   </CardTitle>
 
-                  <CardDescription className="font-medium text-gray-700">
+                  <CardDescription className="font-medium text-amber-800 dark:text-amber-200 leading-relaxed">
                     {feed.feedback}
                   </CardDescription>
                 </Card>

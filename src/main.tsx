@@ -4,6 +4,7 @@ import { StrictMode } from 'react'
   import App from './App.tsx'
   import { ClerkProvider } from '@clerk/clerk-react'
 import { ToasterProvider } from './providers/toast-provider.tsx'
+import { ThemeProvider } from 'next-themes'
 
   // Import your Publishable Key
   const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
@@ -14,9 +15,11 @@ import { ToasterProvider } from './providers/toast-provider.tsx'
 
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
-      <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-        <App />
-        <ToasterProvider />
-      </ClerkProvider>
+      <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+        <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+          <App />
+          <ToasterProvider />
+        </ClerkProvider>
+      </ThemeProvider>
     </StrictMode>,
   )
