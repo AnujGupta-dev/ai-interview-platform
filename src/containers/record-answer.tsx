@@ -285,9 +285,17 @@ export const RecordAnswer = ({
 
       <div className="w-full mt-4 p-4 border rounded-md bg-gray-50">
         <h2 className="text-lg font-semibold">Your Answer:</h2>
-        <p className="text-sm mt-2 text-gray-700 whitespace-normal">
-          {userAnswer || "Start recording to see your answer here"}
-        </p>
+        <textarea
+          value={userAnswer}
+          onChange={(e) => {
+            setUserAnswer(e.target.value);
+            e.target.style.height = "auto"; 
+            e.target.style.height = e.target.scrollHeight + "px"; 
+          }}
+          className="text-md mt-2 text-gray-700 w-full resize-none overflow-hidden border-none focus:outline-none focus:ring-0 min-h-32"
+          placeholder="Start recording to see your answer here"
+        />
+
       </div>
     </div>
   );
