@@ -11,7 +11,6 @@ import {
   TrendingUp, 
   Shield,
   CheckCircle,
-  Star
 } from "lucide-react";
 
 export const AboutUsPage = () => {
@@ -126,7 +125,7 @@ export const AboutUsPage = () => {
             Our Values
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {values.map((value, index) => (
+            {values.map((value) => (
               <Card key={value.title} className="gradient-card hover-lift animate-slide-up">
                 <CardContent className="p-6">
                   <div className="flex items-start gap-4">
@@ -154,7 +153,7 @@ export const AboutUsPage = () => {
             Meet Our Team
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {team.map((member, index) => (
+            {team.map((member) => (
               <Card key={member.name} className="gradient-card hover-lift animate-slide-up">
                 <CardContent className="p-6 text-center">
                   <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">

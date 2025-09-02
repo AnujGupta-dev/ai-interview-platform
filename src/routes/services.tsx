@@ -79,7 +79,7 @@ export const ServicesPage = () => {
             Why Choose Our Services?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, index) => (
+            {features.map((feature) => (
               <Card key={feature.title} className="gradient-card hover-lift animate-slide-up">
                 <CardContent className="p-6 text-center">
                   <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
@@ -103,7 +103,7 @@ export const ServicesPage = () => {
             What Our Users Say
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
+            {testimonials.map((testimonial) => (
               <Card key={testimonial.name} className="gradient-card hover-lift animate-slide-up">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-1 mb-4">
