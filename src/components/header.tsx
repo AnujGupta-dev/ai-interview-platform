@@ -77,7 +77,7 @@ import { useAuth } from "@clerk/clerk-react";
               <ThemeToggle />
             </div>
             {/* profile section */}
-            <div className="hover-lift">
+            <div>
               <ProfileContainer />
             </div>
             {/* mobile menu toggle */}

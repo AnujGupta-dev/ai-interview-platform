@@ -87,7 +87,16 @@ export const RecordAnswer = ({
       setAiResult(aiResult);
     } else {
       resetTranscript();
-      SpeechRecognition.startListening({ continuous: true, language: "en-US" });
+      
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(() => {
+          SpeechRecognition.startListening({ continuous: true, language: "en-US" });
+        })
+        .catch((err) => {
+          console.error("Mic error:", err);
+          toast.error("Microphone access denied");
+        });
+
     }
   };
 
@@ -289,8 +298,8 @@ export const RecordAnswer = ({
           value={userAnswer}
           onChange={(e) => {
             setUserAnswer(e.target.value);
-            e.target.style.height = "auto"; 
-            e.target.style.height = e.target.scrollHeight + "px"; 
+            e.target.style.height = "auto";
+            e.target.style.height = e.target.scrollHeight + "px";
           }}
           className="text-md mt-2 text-gray-700 w-full resize-none overflow-hidden border-none focus:outline-none focus:ring-0 min-h-32"
           placeholder="Start recording to see your answer here"

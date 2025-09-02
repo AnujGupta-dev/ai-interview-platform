@@ -21,13 +21,13 @@ export const ProfileContainer = () => {
       ) : (
         <>
           <Link to={"/sign-in"}>
-            <Button size={"sm"} variant={"outline"}>
+            <Button size={"sm"} variant={"outline"} className="hover-lift">
               Login
             </Button>
           </Link>
 
           <Link to={"/sign-up"}>
-            <Button size={"sm"}>Get Started</Button>
+            <Button size={"sm"} className="hover-lift">Get Started</Button>
           </Link>
         </>
       )}
