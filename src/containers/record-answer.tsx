@@ -9,11 +9,8 @@ import {
   VideoOff,
   WebcamIcon,
 } from "lucide-react";
-
-import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
-
 import { TooltipButton } from "@/components/tooltip-button";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { toast } from "sonner";
 import { chatSession } from "@/scripts/ai-studio";
 import { SaveModal } from "@/components/save-modal";
@@ -42,61 +39,72 @@ interface AIResponse {
   feedback: string;
 }
 
-export const RecordAnswer = ({
-  question,
-  isWebCam,
-  setIsWebCam,
-}: RecordAnswerProps) => {
-  const {
-    transcript,
-    listening,
-    resetTranscript,
-    browserSupportsSpeechRecognition,
-  } = useSpeechRecognition();
-
+export const RecordAnswer = ({ question, isWebCam, setIsWebCam }: RecordAnswerProps) => {
+  const [transcript, setTranscript] = useState("");
+  const [listening, setListening] = useState(false);
   const [userAnswer, setUserAnswer] = useState("");
   const [isAiGenerating, setIsAiGenerating] = useState(false);
   const [aiResult, setAiResult] = useState<AIResponse | null>(null);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
   const { userId } = useAuth();
   const { interviewId } = useParams();
 
-  const recordUserAnswer = async () => {
-    if (!browserSupportsSpeechRecognition) {
-      toast.error("Browser doesn't support speech recognition");
-      return;
-    }
+  // Initialize SpeechRecognition
+  useEffect(() => {
+    if (!("SpeechRecognition" in window || "webkitSpeechRecognition" in window)) return;
 
-    if (listening) {
-      SpeechRecognition.stopListening();
+    const SpeechRecognition = window.SpeechRecognition || (window as any).webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = "en-US";
 
-      if (userAnswer?.length < 30) {
-        toast.error("Error", {
-          description: "Your answer should be more than 30 characters",
-        });
-        return;
+    recognition.onstart = () => setListening(true);
+    recognition.onresult = (event: SpeechRecognitionEvent) => {
+      let finalTranscript = "";
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        if (event.results[i].isFinal) finalTranscript += event.results[i][0].transcript;
       }
+      setTranscript(finalTranscript);
+    };
+    recognition.onerror = () => setListening(false);
+    recognition.onend = () => setListening(false);
 
-      const aiResult = await generateResult(
-        question.question,
-        question.answer,
-        userAnswer
-      );
-      setAiResult(aiResult);
+    recognitionRef.current = recognition;
+  }, []);
+
+  // Only update userAnswer while listening
+  useMemo(() => {
+    if (listening) setUserAnswer(userAnswer + transcript);
+  }, [transcript, listening]);
+
+  const startListening = async () => {
+    if (!recognitionRef.current) return toast.error("Speech recognition not supported");
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      stream.getTracks().forEach(track => track.stop());
+      setTranscript("");
+      recognitionRef.current.start();
+    } catch {
+      toast.error("Microphone access denied");
+    }
+  };
+
+  const stopListening = () => {
+    recognitionRef.current?.stop();
+  };
+
+  const recordUserAnswer = async () => {
+    if (listening) {
+      stopListening();
+      if (userAnswer.length < 30) return toast.error("Answer must be at least 30 characters");
+      const aiRes = await generateResult(question.question, question.answer, userAnswer);
+      setAiResult(aiRes);
     } else {
-      resetTranscript();
-      
-      navigator.mediaDevices.getUserMedia({ audio: true })
-        .then(() => {
-          SpeechRecognition.startListening({ continuous: true, language: "en-US" });
-        })
-        .catch((err) => {
-          console.error("Mic error:", err);
-          toast.error("Microphone access denied");
-        });
-
+      startListening();
     }
   };
 
@@ -154,75 +162,43 @@ export const RecordAnswer = ({
     }
   };
 
+
   const recordNewAnswer = () => {
+    setTranscript("");
     setUserAnswer("");
-    resetTranscript();
-    SpeechRecognition.startListening({ continuous: true, language: "en-US" });
+    stopListening();
   };
 
   const saveUserAnswer = async () => {
+    if (!aiResult) return;
     setLoading(true);
-
-    if (!aiResult) {
-      return;
-    }
-
-    const currentQuestion = question.question;
-
     try {
-      const userAnswerQuery = query(
+      const q = query(
         collection(db, "userAnswers"),
         where("userId", "==", userId),
-        where("question", "==", currentQuestion)
+        where("question", "==", question.question)
       );
-
-      const querySnap = await getDocs(userAnswerQuery);
-
-      if (!querySnap.empty) {
-        console.log("Query Snap Size", querySnap.size);
-        toast.info("Already Answered", {
-          description: "You have already answered this question",
-        });
-        return;
-      } else {
-        const questionAnswerRef = await addDoc(collection(db, "userAnswers"), {
-          mockIdRef: interviewId,
-          question: question.question,
-          correct_ans: question.answer,
-          user_ans: userAnswer,
-          feedback: aiResult.feedback,
-          rating: aiResult.ratings,
-          userId,
-          createdAt: serverTimestamp(),
-        });
-
-        const id = questionAnswerRef.id;
-
-        await updateDoc(doc(db, "userAnswers", id), {
-          id,
-          updatedAt: serverTimestamp(),
-        });
-
-        toast("Saved", { description: "Your answer has been saved.." });
-      }
-
-      setUserAnswer("");
-      resetTranscript();
-      SpeechRecognition.stopListening();
-    } catch (error) {
-      toast("Error", {
-        description: "An error occurred while generating feedback.",
+      const snap = await getDocs(q);
+      if (!snap.empty) return toast.info("Already answered");
+      const ref = await addDoc(collection(db, "userAnswers"), {
+        mockIdRef: interviewId,
+        question: question.question,
+        correct_ans: question.answer,
+        user_ans: userAnswer,
+        feedback: aiResult.feedback,
+        rating: aiResult.ratings,
+        userId,
+        createdAt: serverTimestamp(),
       });
-      console.log(error);
+      await updateDoc(doc(db, "userAnswers", ref.id), { id: ref.id, updatedAt: serverTimestamp() });
+      toast.success("Saved");
+      setOpen(false);
+    } catch {
+      toast.error("Failed to save answer");
     } finally {
       setLoading(false);
-      setOpen(false);
     }
   };
-
-  useEffect(() => {
-    setUserAnswer(transcript);
-  }, [transcript]);
 
   return (
     <div className="w-full flex flex-col items-center gap-8 mt-4">
