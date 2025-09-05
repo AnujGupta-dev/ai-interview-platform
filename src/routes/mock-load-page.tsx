@@ -14,12 +14,14 @@ import { InterviewPin } from "@/components/interview-pin";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 import type { Interview } from "@/types";
+import { useAuth } from "@clerk/clerk-react";
 
 export const MockLoadPage = () => {
   const { interviewId } = useParams<{ interviewId: string }>();
   const [interview, setInterview] = useState<Interview | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isWebCamEnabled, setIsWebCamEnabled] = useState(false);
+  const { userId } = useAuth();
 
   const navigate = useNavigate();
 
@@ -33,7 +35,7 @@ export const MockLoadPage = () => {
         setIsLoading(true);
         try {
           const interviewDoc = await getDoc(doc(db, "interviews", interviewId));
-          if (interviewDoc.exists()) {
+          if (interviewDoc.exists() && interviewDoc.data()?.userId === userId) {
             setInterview({ ...interviewDoc.data() } as Interview);
           } else {
             navigate("/generate", { replace: true });

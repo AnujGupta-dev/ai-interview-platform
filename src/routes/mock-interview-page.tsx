@@ -13,11 +13,13 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import type { Interview } from "@/types";
 import { QuestionSection } from "@/containers/question-section";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@clerk/clerk-react";
 
 export const MockInterviewPage = () => {
   const { interviewId } = useParams<{ interviewId: string }>();
   const [interview, setInterview] = useState<Interview | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { userId } = useAuth();
 
   const navigate = useNavigate();
 
@@ -31,7 +33,7 @@ export const MockInterviewPage = () => {
         setIsLoading(true);
         try {
           const interviewDoc = await getDoc(doc(db, "interviews", interviewId));
-          if (interviewDoc.exists()) {
+          if (interviewDoc.exists() && interviewDoc.data()?.userId === userId) {
             setInterview({ ...interviewDoc.data() } as Interview);
           } else {
             navigate("/generate", { replace: true });
