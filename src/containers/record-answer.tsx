@@ -71,7 +71,7 @@ export const RecordAnswer = ({ question, isWebCam, setIsWebCam }: RecordAnswerPr
       setTranscript(finalTranscript);
     };
     recognition.onerror = () => setListening(false);
-    recognition.onend = () => setListening(false);
+    // recognition.onend = () => setListening(false);
 
     recognitionRef.current = recognition;
   }, []);
