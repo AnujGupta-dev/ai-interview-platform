@@ -2,9 +2,31 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/svg/logo.svg" id="Logoicon" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ai-Mock-Interview</title>
+    <title>PrepMate AI</title>
+    <script>
+      function updateLogoicon() {
+        const Logoicon = document.getElementById('Logoicon');
+        const isDark = localStorage.getItem('theme') === 'dark' || 
+                      (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        
+        if (Logoicon) {
+          Logoicon.href = isDark ? '/svg/logo.svg' : '/svg/logo2.svg';
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', updateLogoicon);
+
+      // Listen for theme changes (when React updates localStorage)
+      window.addEventListener('storage', function(e) {
+        if (e.key === 'theme') {
+          updateLogoicon();
+        }
+      });
+      
+      setInterval(updateLogoicon, 1000);
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -16,8 +16,8 @@ export const ContactUsPage = () => {
       icon: Mail,
       title: "Email Us",
       description: "Get in touch via email",
-      primary: "contact@aiinterview.com",
-      secondary: "support@aiinterview.com"
+      primary: "contact@prepmateai.com",
+      secondary: "support@prepmateai.com"
     },
     {
       icon: Phone,

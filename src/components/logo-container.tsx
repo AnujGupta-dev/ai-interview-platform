@@ -18,7 +18,7 @@ const LogoContainer = () => {
     <Link to={"/"}>
       <img
         src={logoSrc}
-        alt="Logo"
+        alt="PrepMate AI"
         className="min-w-10 min-h-10 object-contain transition-all duration-300"
       />
     </Link>

@@ -1,4 +1,4 @@
-## AI Interview Platform
+## PrepMate AI
 
 An end-to-end, AI-powered mock interview platform to help candidates practice real-time interviews. It features account management, protected routes, interview creation and practice flows, voice input, webcam capture, and AI-generated feedback — all built with modern React tooling and deployed to Firebase Hosting.
 
@@ -34,7 +34,7 @@ An end-to-end, AI-powered mock interview platform to help candidates practice re
 ### Installation
 ```bash
 git clone <your-repo-url>.git
-cd ai-interview-platform
+cd prepmate-ai
 npm install
 ```
 

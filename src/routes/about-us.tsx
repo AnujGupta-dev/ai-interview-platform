@@ -79,7 +79,7 @@ export const AboutUsPage = () => {
         {/* Hero Section */}
         <div className="my-12 animate-slide-up">
           <Headings
-            title="About AI Interview Platform"
+            title="About PrepMate AI"
             description="Empowering professionals worldwide with AI-driven interview preparation and career advancement tools."
           />
         </div>
@@ -184,7 +184,7 @@ export const AboutUsPage = () => {
         {/* Why Choose Us */}
         <div className="gradient-card p-8 rounded-2xl animate-fade-in">
           <h2 className="text-3xl font-bold text-center text-foreground mb-8">
-            Why Choose AI Interview Platform?
+            Why Choose PrepMate AI?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="flex items-start gap-3">

@@ -13,7 +13,7 @@ export const HomePage = () => {
         <div className="my-12 animate-fade-in">
           <h2 className="text-4xl text-center md:text-left md:text-7xl font-bold leading-tight">
             <span className="gradient-primary bg-clip-text text-transparent font-extrabold md:text-9xl">
-              AI Superpower
+              PrepMate AI
             </span>
             <span className="text-muted-foreground font-extrabold block md:inline">
               - A better way to
@@ -54,12 +54,12 @@ export const HomePage = () => {
         <div className="w-full mt-8 rounded-2xl gradient-card h-[480px] overflow-hidden relative animate-scale-in hover-lift">
           <img
             src="/img/hero.jpg"
-            alt="AI Interview Platform"
+            alt="PrepMate AI"
             className="w-full h-full object-cover"
           />
 
           <div className="absolute top-6 left-6 px-6 py-3 rounded-xl glass-effect backdrop-blur-md">
-            <span className="font-semibold text-foreground">Interviews Copilot&copy;</span>
+            <span className="font-semibold text-foreground">PrepMate AI&copy;</span>
           </div>
 
           <div className="hidden md:block absolute w-96 bottom-6 right-6 px-6 py-4 rounded-xl glass-effect backdrop-blur-md animate-fade-in">
