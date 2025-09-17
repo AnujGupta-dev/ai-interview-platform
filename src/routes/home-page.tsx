@@ -31,7 +31,7 @@ export const HomePage = () => {
           </p>
         </div>
 
-        <div className="flex w-full items-center justify-evenly md:px-12 md:py-20 md:items-center md:justify-end gap-16 animate-slide-up">
+        <div className="flex w-full flex-wrap items-center justify-center gap-8 sm:gap-12 md:px-12 md:py-20 md:justify-end md:gap-16 animate-slide-up">
           <div className="text-center hover-lift p-4 rounded-lg">
             <p className="text-4xl font-bold gradient-primary bg-clip-text text-transparent">
               250k+
@@ -51,7 +51,7 @@ export const HomePage = () => {
         </div>
 
         {/* image section */}
-        <div className="w-full mt-8 rounded-2xl gradient-card h-[480px] overflow-hidden relative animate-scale-in hover-lift">
+        <div className="w-full mt-8 rounded-2xl gradient-card h-64 sm:h-80 md:h-[480px] overflow-hidden relative animate-scale-in hover-lift">
           <img
             src="/img/hero.jpg"
             alt="PrepMate AI"
@@ -105,11 +105,11 @@ export const HomePage = () => {
             <img
               src="/img/office.jpg"
               alt="Office workspace"
-              className="w-full max-h-96 rounded-2xl object-cover shadow-lg"
+              className="w-full h-56 sm:h-72 md:max-h-96 rounded-2xl object-cover shadow-lg"
             />
           </div>
 
-          <div className="col-span-1 md:col-span-2 gap-8 max-h-96 min-h-96 w-full flex flex-col items-center justify-center text-center p-6 gradient-card rounded-2xl">
+          <div className="col-span-1 md:col-span-2 gap-8 md:max-h-96 md:min-h-96 w-full flex flex-col items-center justify-center text-center p-4 md:p-6 gradient-card rounded-2xl">
             <p className="text-center text-muted-foreground text-lg leading-relaxed mb-8">
               Transform the way you prepare, gain confidence, and boost your
               chances of landing your dream job. Let AI be your edge in

@@ -201,7 +201,7 @@ export const RecordAnswer = ({ question, isWebCam, setIsWebCam }: RecordAnswerPr
   };
 
   return (
-    <div className="w-full flex flex-col items-center gap-8 mt-4">
+    <div className="w-full flex flex-col items-center gap-6 sm:gap-8 mt-4">
       {/* save modal */}
       <SaveModal
         isOpen={open}
@@ -210,7 +210,7 @@ export const RecordAnswer = ({ question, isWebCam, setIsWebCam }: RecordAnswerPr
         loading={loading}
       />
 
-      <div className="w-full h-[400px] md:w-96 flex flex-col items-center justify-center border p-4 bg-gray-50 rounded-md">
+      <div className="w-full h-64 sm:h-72 md:h-[400px] md:w-96 flex flex-col items-center justify-center border p-4 bg-gray-50 rounded-md">
         {isWebCam ? (
           <WebCam
             onUserMedia={() => setIsWebCam(true)}
@@ -223,7 +223,7 @@ export const RecordAnswer = ({ question, isWebCam, setIsWebCam }: RecordAnswerPr
       </div>
 
       {/* action buttons group */}
-      <div className="flex items-center justify-center gap-3">
+      <div className="flex flex-wrap items-center justify-center gap-3">
         <TooltipButton
           content={isWebCam ? "Turn Off" : "Turn On"}
           icon={
@@ -268,7 +268,7 @@ export const RecordAnswer = ({ question, isWebCam, setIsWebCam }: RecordAnswerPr
         />
       </div>
 
-      <div className="w-full mt-4 p-4 border rounded-md bg-gray-50">
+      <div className="w-full mt-4 p-3 sm:p-4 border rounded-md bg-gray-50">
         <h2 className="text-lg font-semibold">Your Answer:</h2>
         <textarea
           value={userAnswer}

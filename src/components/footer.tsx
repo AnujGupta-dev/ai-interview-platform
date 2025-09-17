@@ -148,7 +148,7 @@ const Footer = () => {
           <div className="mt-12 pt-8 border-t border-border/30 animate-fade-in">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <p className="text-sm text-muted-foreground text-center md:text-left">
-                © 2024 PrepMate AI. All rights reserved.
+                © 2025 PrepMate AI. All rights reserved.
               </p>
               <div className="flex gap-6 text-sm">
                 <Link to="/privacy" className="text-muted-foreground hover:text-foreground transition-colors duration-200">

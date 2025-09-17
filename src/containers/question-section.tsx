@@ -40,13 +40,13 @@ export const QuestionSection = ({ questions }: QuestionSectionProps) => {
   };
 
   return (
-    <div className="w-full min-h-96 border rounded-md p-4">
+    <div className="w-full min-h-96 border rounded-md p-3 sm:p-4">
       <Tabs
         defaultValue={questions[0]?.question}
-        className="w-full space-y-12"
+        className="w-full space-y-8 sm:space-y-12"
         orientation="vertical"
       >
-        <TabsList className="bg-transparent w-full flex flex-wrap items-center justify-start gap-4">
+        <TabsList className="bg-transparent w-full flex flex-wrap items-center justify-start gap-2 sm:gap-4 overflow-x-auto">
           {questions?.map((tab, i) => (
             <TabsTrigger
               className={cn(

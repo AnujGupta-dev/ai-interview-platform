@@ -1,21 +1,21 @@
 ## PrepMate AI
 
-An end-to-end, AI-powered mock interview platform to help candidates practice real-time interviews. It features account management, protected routes, interview creation and practice flows, voice input, webcam capture, and AI-generated feedback — all built with modern React tooling and deployed to Firebase Hosting.
+AI-powered mock interview platform to practice real-time interviews with webcam, voice input, and instant AI feedback. Includes auth-protected flows, interview creation, session practice, and a results dashboard — built with modern React, TypeScript, Tailwind CSS, and deployed on Firebase Hosting.
 
-### Key Features
-- Authentication with Clerk (sign-in/sign-up, protected routes)
+### Features
+- Authentication with Clerk (protected routes)
 - Create, edit, and manage mock interviews
-- Real-time mock interview experience with voice and webcam support
+- Real-time mock interview with voice and webcam
 - AI-generated questions and feedback
-- Theming (light/dark) and toast notifications
-- Deployed as a SPA with client-side routing
+- Light/Dark theme and toast notifications
+- SPA with client-side routing
 
 ### Tech Stack
 - React 19, TypeScript, Vite 7
 - React Router 7
-- Clerk for authentication (`@clerk/clerk-react`, `@clerk/react-router`)
-- Google Generative AI SDK (`@google/generative-ai`)
-- UI and Styling: Tailwind CSS 4, Radix UI primitives, `lucide-react`
+- Tailwind CSS 4, Radix UI primitives, `lucide-react`
+- Clerk (`@clerk/clerk-react`, `@clerk/react-router`)
+- Google Generative AI (`@google/generative-ai`)
 - Forms & Validation: `react-hook-form`, `zod`
 - Realtime UX: `sonner` toasts
 - Media & Voice: `react-webcam`, `react-speech-recognition`, `vosk-browser`
@@ -28,43 +28,44 @@ An end-to-end, AI-powered mock interview platform to help candidates practice re
 
 ### Prerequisites
 - Node.js 18+ and npm
-- Firebase project (for hosting) — optional until deployment
-- API keys for Clerk and Generative AI
+- Clerk project (frontend publishable key)
+- Generative AI API key (if using AI features)
+- Firebase project (for hosting)
 
 ### Installation
 ```bash
 git clone <your-repo-url>.git
-cd prepmate-ai
+cd ai-interview-platform
 npm install
 ```
 
 ### Environment Variables
-Create a `.env` file in the project root with the following keys:
+Create a `.env` file in the project root with:
 
 ```bash
 # Clerk
 VITE_CLERK_PUBLISHABLE_KEY=pk_test_xxxxxxxxxxxxxxxxxxxxxxxxx
 
-# Google Generative AI (Gemini) — if used in your features
+# Google Generative AI (Gemini)
 VITE_GEMINI_API_KEY=your_gemini_api_key
 
-# Any other client-side keys you introduce
+# Firebase config is provided in client code; add any other client-safe keys as needed
 # VITE_SOME_SERVICE_KEY=...
 ```
 
-Note: Only client-safe values should be exposed as `VITE_` variables. Do not commit secrets.
+Only expose client-safe values prefixed with `VITE_`. Do not commit secrets.
 
 ### Development
 ```bash
 npm run dev
 ```
-The app will start on `http://localhost:5173` by default.
+App runs at `http://localhost:5173`.
 
 ### Build
 ```bash
 npm run build
 ```
-Outputs a production build to `dist/`.
+Outputs to `dist/`.
 
 ### Preview Production Build
 ```bash
@@ -73,33 +74,43 @@ npm run preview
 
 ---
 
-## Scripts
-- `dev`: start Vite dev server
-- `build`: type-check then build the app
-- `lint`: run ESLint
-- `preview`: preview the production build
+## Usage
+1. Sign up/sign in with Clerk.
+2. Create a new mock interview (role, experience, etc.).
+3. Start the session; enable mic/camera if prompted.
+4. Record answers; receive AI feedback and ratings.
+5. View overall score and per-question feedback in the Feedback page.
 
 ---
 
 ## Project Structure (high-level)
 ```text
 src/
-  App.tsx                # Routes and layouts wiring
-  main.tsx               # App bootstrapping, providers (Clerk, Theme, Toaster)
+  App.tsx                # Routes
+  main.tsx               # App bootstrapping/providers
   layouts/               # Public/Protected/Main layouts
-  routes/                # Route screens: home, about, services, etc.
-  components/            # Feature components (e.g., generate)
-  providers/             # Toaster provider, theme logic
+  routes/                # Screens (home, services, mock, feedback)
+  components/            # UI components
+  containers/            # Feature containers
+  providers/             # Toast provider, theme
+  scripts/               # AI integration
+  types/                 # Shared types
   index.css, App.css     # Global styles
 public/                  # Static assets
 ```
 
-Key routes and flows are registered in `src/App.tsx` and providers in `src/main.tsx`.
+---
+
+## Contribution Guidelines
+- Fork the repo and create a feature branch
+- Follow existing code style and lint rules
+- Write clear commit messages
+- Open a PR describing changes and screenshots where relevant
 
 ---
 
 ## Deployment (Firebase Hosting)
-This project is configured for Firebase Hosting as a single-page app (SPA), rewriting all routes to `index.html`.
+The SPA is configured to rewrite routes to `index.html` via `firebase.json`.
 
 1) Install Firebase CLI and login:
 ```bash
@@ -112,32 +123,18 @@ firebase login
 npm run build
 ```
 
-3) Initialize (if not already) and deploy:
+3) Deploy:
 ```bash
-firebase init hosting
 firebase deploy
 ```
-
-`firebase.json` points hosting to the `dist` directory and rewrites all routes.
-
----
-
-## Screenshots
-Add screenshots or GIFs here to showcase the flows (home, interview creation, mock, feedback).
-
----
-
-## Contributing
-Issues and pull requests are welcome. For significant changes, please open an issue first to discuss what you would like to change.
 
 ---
 
 ## License
-Add your preferred license (e.g., MIT). If unspecified, all rights reserved by default.
+MIT License
 
 ---
 
 ## Links
-- Live demo: add a link after deployment
-- GitHub repository: add your repo URL
-- LinkedIn post: add a link when you share it
+- Live demo: add after deployment
+- GitHub repository: add repo URL

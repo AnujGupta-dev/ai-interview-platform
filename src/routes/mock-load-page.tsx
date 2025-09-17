@@ -101,7 +101,7 @@ export const MockLoadPage = () => {
       </Alert>
 
       <div className="flex items-center justify-center w-full h-full animate-fade-in">
-        <div className="w-full h-[400px] md:w-96 flex flex-col items-center justify-center gradient-card p-6 rounded-xl border border-border/50 hover-lift">
+        <div className="w-full h-64 sm:h-72 md:h-[400px] md:w-96 flex flex-col items-center justify-center gradient-card p-4 md:p-6 rounded-xl border border-border/50 hover-lift">
           {isWebCamEnabled ? (
             <WebCam
               audio={true}
